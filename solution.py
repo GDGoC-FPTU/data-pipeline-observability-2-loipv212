@@ -78,12 +78,12 @@ def validate(data):
     # TODO: Lap qua data, kiem tra tung record
     # Giu lai record hop le, dem record loi
     for record in data:
-        if record.get('price', 0) > 0 and record.get('category'):
+        if record.get('price', 0) > 0 and record.get('category', '').strip():
             valid_records.append(record)
         else:
             error_count += 1
 
-    print(f"Validation complete. Valid: {len(valid_records)}, Errors: {error_count}")
+    print(f"Validation summary: {len(valid_records)} valid, {error_count} errors.")
     return valid_records
 
 
