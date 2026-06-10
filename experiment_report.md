@@ -1,8 +1,8 @@
 # Experiment Report: Data Quality Impact on AI Agent
 
-**Student ID:** AI20K-XXXX
-**Name:** (Dien ten cua ban)
-**Date:** (Dien ngay thuc hien)
+**Student ID:** 2A202600784
+**Name:** Phạm Văn Lợi
+**Date:** 10/06/2026
 
 ---
 
@@ -12,8 +12,8 @@ Chay `agent_simulation.py` voi 2 bo du lieu va ghi lai ket qua:
 
 | Scenario | Agent Response | Accuracy (1-10) | Notes |
 |----------|----------------|-----------------|-------|
-| Clean Data (`processed_data.csv`) | (Ghi cau tra loi cua Agent) | | |
-| Garbage Data (`garbage_data.csv`) | (Ghi cau tra loi cua Agent) | | |
+| Clean Data (`processed_data.csv`) | Agent: Based on my data, the best choice is Laptop at $1200. | 10 | Agent trả về kết quả đúng với sản phẩm phù hợp. |
+| Garbage Data (`garbage_data.csv`) | Agent: Based on my data, the best choice is Nuclear Reactor at $999999. | 1 | Agent bị đánh lừa bởi dữ liệu lỗi do outlier giá. |
 
 ---
 
@@ -21,15 +21,12 @@ Chay `agent_simulation.py` voi 2 bo du lieu va ghi lai ket qua:
 
 ### Tai sao Agent tra loi sai khi dung Garbage Data?
 
-(Viet nhan xet cua ban o day — it nhat 50 tu)
-
-(Hay phan tich cac van de nhu Duplicate IDs, wrong data types, outliers, null values
-va giai thich tai sao chung anh huong den ket qua cua Agent.)
+Khi chạy với bộ dữ liệu Garbage Data (dữ liệu rác/bị nhiễm độc), Agent đã đưa ra một câu trả lời hoàn toàn vô lý là "Nuclear Reactor" thay vì một sản phẩm thông thường. Điều này xảy ra do hệ thống logic của Agent phụ thuộc hoàn toàn vào dữ liệu đầu vào. Dữ liệu rác chứa các giá trị outliers cực đoan (giá lên tới $999999) và phân loại sai lệch. Khi Agent áp dụng logic "tìm sản phẩm có giá cao nhất", nó đã tự động bị dẫn dắt bởi bản ghi nhiễu này. Nếu không có bước ETL để lọc bỏ outlier và làm sạch dữ liệu từ đầu, Agent RAG sẽ trở nên vô dụng hoặc thậm chí đưa ra các quyết định nguy hiểm trong môi trường thực tế, vì bản thân LLM/Agent không thể tự biết đâu là dữ liệu rác nếu chúng ta không có Data Pipeline chuẩn.
 
 ---
 
 ## 3. Ket luan
 
-**Quality Data > Quality Prompt?** (Dong y hay khong? Giai thich ngan gon.)
+**Quality Data > Quality Prompt?** Đồng ý hoàn toàn.
 
-(Viet ket luan cua ban o day)
+Dù prompt của bạn có tinh vi đến đâu, nếu dữ liệu truyền vào hệ thống (context/knowledge base) bị sai lệch (Garbage in), kết quả trả ra chắc chắn sẽ là sai lệch (Garbage out). Dữ liệu chất lượng cao là nền tảng cốt lõi không thể thay thế cho bất kỳ hệ thống AI nào.
